@@ -7,6 +7,7 @@ class UsuarioCreate(BaseModel):
     email: EmailStr
     contrasenia: str
     rol: Literal["mando", "enfermero"]
+    numero_empresa: str
 
 # Para devolver datos en GET
 class UsuarioOut(BaseModel):
@@ -14,6 +15,7 @@ class UsuarioOut(BaseModel):
     nombre: str
     email: EmailStr
     rol: Literal["mando", "enfermero"]
+    numero_empresa: str
 
     model_config = {
         "from_attributes": True

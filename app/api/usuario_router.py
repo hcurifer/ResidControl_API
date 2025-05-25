@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from app.schemas.usuario import UsuarioCreate, UsuarioOut
 from app.db.session import SessionLocal
-from app.crud.usuario import crear_usuario, obtener_usuarios, obtener_usuario_por_id
+from app.crud.usuario import crear_usuario, obtener_usuarios, obtener_usuario_por_id, obtener_usuario_por_email
 
 router = APIRouter(
     prefix="/usuarios",

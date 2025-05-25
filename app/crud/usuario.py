@@ -14,7 +14,8 @@ def crear_usuario(db: Session, usuario: UsuarioCreate):
         nombre=usuario.nombre,
         email=usuario.email,
         contrasenia_hash=hash_contra,
-        rol=usuario.rol
+        rol=usuario.rol,
+        numero_empresa=usuario.numero_empresa
     )
     db.add(db_usuario)
     db.commit()
