@@ -30,3 +30,7 @@ def obtener_usuario_por_id(db: Session, id_usuario: int):
 
 def obtener_usuario_por_email(db: Session, email: str):
     return db.query(Usuario).filter(Usuario.email == email).first()
+
+def obtener_usuario_por_numero_empresa(db: Session, numero_empresa: str):
+    return db.query(Usuario).filter(Usuario.numero_empresa == numero_empresa).first()
+
