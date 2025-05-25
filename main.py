@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api import usuario_router
+from app.api import residente_router
 
 app = FastAPI(title="ResidControl API")
 
@@ -15,3 +16,4 @@ app.add_middleware(
 
 # Registrar routers
 app.include_router(usuario_router.router)
+app.include_router(residente_router.router)
