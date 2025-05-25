@@ -14,7 +14,8 @@ def crear_usuario(db: Session, usuario: UsuarioCreate):
         nombre=usuario.nombre,
         email=usuario.email,
         contrasenia_hash=hash_contra,
-        rol=usuario.rol
+        rol=usuario.rol,
+        numero_empresa=usuario.numero_empresa
     )
     db.add(db_usuario)
     db.commit()
@@ -29,3 +30,7 @@ def obtener_usuario_por_id(db: Session, id_usuario: int):
 
 def obtener_usuario_por_email(db: Session, email: str):
     return db.query(Usuario).filter(Usuario.email == email).first()
+
+def obtener_usuario_por_numero_empresa(db: Session, numero_empresa: str):
+    return db.query(Usuario).filter(Usuario.numero_empresa == numero_empresa).first()
+
