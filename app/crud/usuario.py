@@ -12,6 +12,7 @@ def crear_usuario(db: Session, usuario: UsuarioCreate):
     hash_contra = get_password_hash(usuario.contrasenia)
     db_usuario = Usuario(
         nombre=usuario.nombre,
+        apellidos=usuario.apellidos,
         email=usuario.email,
         contrasenia_hash=hash_contra,
         rol=usuario.rol,

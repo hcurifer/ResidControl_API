@@ -4,6 +4,7 @@ from typing import Literal
 # Para recibir datos al crear un usuario
 class UsuarioCreate(BaseModel):
     nombre: str
+    apellidos: str
     email: EmailStr
     contrasenia: str
     rol: Literal["mando", "enfermero"]
@@ -13,6 +14,7 @@ class UsuarioCreate(BaseModel):
 class UsuarioOut(BaseModel):
     id_usuario: int
     nombre: str
+    apellidos: str
     email: EmailStr
     rol: Literal["mando", "enfermero"]
     numero_empresa: str
