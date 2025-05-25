@@ -4,4 +4,4 @@ app = FastAPI()
 
 @app.get("/")
 def read_root():
-    return {"message": "API de ResidControl funcionando"}
+    return {"message": "¡FastAPI funcionando correctamente!"}
