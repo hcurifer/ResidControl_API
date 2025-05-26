@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api import usuario_router
 from app.api import residente_router
 from app.api import tarea_router
+from app.api import turno_router
 
 app = FastAPI(title="ResidControl API")
 
@@ -19,3 +20,4 @@ app.add_middleware(
 app.include_router(usuario_router.router)
 app.include_router(residente_router.router)
 app.include_router(tarea_router.router)
+app.include_router(turno_router.router)
