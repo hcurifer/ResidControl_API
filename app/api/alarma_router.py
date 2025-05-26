@@ -8,7 +8,7 @@ from app.crud.alarma import (
     obtener_alarmas,
     obtener_alarma_por_id,
     cambiar_estado_alarma,
-    obtener_alarmas_por_estado
+    obtener_alarmas_por_estado,
     obtener_alarmas_pendientes_por_fecha
 )
 
