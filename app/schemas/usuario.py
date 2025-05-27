@@ -5,6 +5,7 @@ from typing import Literal
 class UsuarioCreate(BaseModel):
     nombre: str
     apellidos: str
+    edad: Optional[int] = None
     email: EmailStr
     contrasenia: str
     rol: Literal["mando", "enfermero"]
@@ -15,6 +16,7 @@ class UsuarioOut(BaseModel):
     id_usuario: int
     nombre: str
     apellidos: str
+    edad: Optional[int]
     email: EmailStr
     rol: Literal["mando", "enfermero"]
     numero_empresa: str
