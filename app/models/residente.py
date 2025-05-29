@@ -4,7 +4,7 @@ from app.db.base import Base
 class Residente(Base):
     __tablename__ = "residentes"
 
-    id_residente = Column(Integer, primary_key=True, index=True)
+    id_residente = Column(Integer, primary_key=True, index=True, autoincrement=True)
     nombre = Column(String(100), nullable=False)
     apellidos = Column(String(100), nullable=False)
     edad = Column(Integer, nullable=True)
