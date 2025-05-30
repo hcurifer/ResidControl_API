@@ -7,3 +7,8 @@ class PeticionDiaRequest(BaseModel):
     fecha: str
     nombre: str
     apellidos: str
+
+class PeticionDiaInput(BaseModel):
+    fecha: str
+    nombre: str
+    apellidos: str
