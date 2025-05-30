@@ -31,11 +31,26 @@ def get_db():
 
 # Crear usuario
 @router.post("/", response_model=UsuarioOut)
-def crear(usuario: UsuarioCreate, db: Session = Depends(get_db)):
-    usuario_existente = obtener_usuario_por_email(db, usuario.email)
-    if usuario_existente:
-        raise HTTPException(status_code=400, detail="El email ya está registrado")
-    return crear_usuario(db, usuario)
+def crear_usuario(usuario: UsuarioCreate, db: Session = Depends(get_db)):
+    # Verificar que no exista el email
+    if db.query(Usuario).filter_by(email=usuario.email).first():
+        raise HTTPException(status_code=400, detail="Email ya registrado")
+
+    hashed_password = pwd_context.hash(usuario.contrasenia)
+
+    nuevo_usuario = Usuario(
+        nombre=usuario.nombre,
+        apellidos=usuario.apellidos,
+        edad=usuario.edad,
+        email=usuario.email,
+        contrasenia_hash=hashed_password,
+        rol=usuario.rol,
+        numero_empresa=usuario.numero_empresa
+    )
+    db.add(nuevo_usuario)
+    db.commit()
+    db.refresh(nuevo_usuario)
+    return nuevo_usuario
 
 # Obtener lista de usuarios
 @router.get("/", response_model=List[UsuarioOut])
