@@ -3,7 +3,6 @@ from datetime import datetime
 from typing import Optional, Literal
 
 class AlarmaCreate(BaseModel):
-    tipo: str
     descripcion: str
     estado: Literal["pendiente", "completada"]
     fecha: datetime
@@ -12,7 +11,6 @@ class AlarmaCreate(BaseModel):
 
 class AlarmaOut(BaseModel):
     id_alarma: int
-    tipo: str
     descripcion: str
     estado: str
     fecha: datetime

@@ -4,8 +4,7 @@ from app.db.base import Base
 class Alarma(Base):
     __tablename__ = "alarmas"
 
-    id_alarma = Column(Integer, primary_key=True, index=True)
-    tipo = Column(String(50), nullable=False)
+    id_alarma = Column(Integer, primary_key=True, index=True,  autoincrement=True)
     descripcion = Column(Text, nullable=False)
     estado = Column(String(20), nullable=False)
     fecha = Column(DateTime, nullable=False)
