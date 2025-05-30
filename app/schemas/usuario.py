@@ -25,3 +25,6 @@ class UsuarioOut(BaseModel):
     model_config = {
         "from_attributes": True
     }
+class UsuarioLogin(BaseModel):
+    numero_empresa: str
+    contrasenia: str

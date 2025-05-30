@@ -11,6 +11,7 @@ from app.crud.usuario import (
     obtener_usuario_por_numero_empresa
 )
 from passlib.context import CryptContext
+from app.schemas.usuario import UsuarioLogin
 
 router = APIRouter(
     prefix="/usuarios",
@@ -51,7 +52,7 @@ def obtener_por_id(id_usuario: int, db: Session = Depends(get_db)):
 
 # Login por número de empresa y contraseña
 @router.post("/login")
-def login(datos: dict, db: Session = Depends(get_db)):
+def login(datos: UsuarioLogin, db: Session = Depends(get_db)):
     numero_empresa = datos.get("numero_empresa")
     contrasenia = datos.get("contrasenia")
 
