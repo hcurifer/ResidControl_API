@@ -51,28 +51,43 @@ def obtener_por_id(id_usuario: int, db: Session = Depends(get_db)):
     return usuario
 
 # Login por número de empresa y contraseña
+# Login por número de empresa y contraseña
 @router.post("/login")
 def login(datos: UsuarioLogin, db: Session = Depends(get_db)):
-    numero_empresa = datos.get("numero_empresa")
-    contrasenia = datos.get("contrasenia")
+    numero_empresa = datos.numero_empresa
+    contrasenia = datos.contrasenia
 
-    if not numero_empresa or not contrasenia:
-        raise HTTPException(status_code=400, detail="Faltan campos obligatorios")
+    print("🔐 Intentando login...")
+    print("📨 Número recibido:", numero_empresa)
+    print("📨 Contraseña recibida:", contrasenia)
 
     usuario = obtener_usuario_por_numero_empresa(db, numero_empresa)
+
     if not usuario:
+        print("❌ Usuario no encontrado")
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
 
-    if not pwd_context.verify(contrasenia, usuario.contrasenia_hash):
+    print("✅ Usuario encontrado en DB:", usuario.numero_empresa)
+    print("🔒 Hash en DB:", usuario.contrasenia_hash)
+
+    es_valida = pwd_context.verify(contrasenia, usuario.contrasenia_hash)
+    print("🔎 ¿Contraseña válida?:", es_valida)
+
+    if not es_valida:
+        print("❌ Contraseña incorrecta")
         raise HTTPException(status_code=401, detail="Contraseña incorrecta")
+
+    print("✅ Login exitoso")
 
     return {
         "mensaje": "Login correcto",
         "usuario": {
             "id": usuario.id_usuario,
             "nombre": usuario.nombre,
+            "apellidos": usuario.apellidos,
             "email": usuario.email,
             "rol": usuario.rol,
             "numero_empresa": usuario.numero_empresa
-        }
+        },
+        "token": "fake-jwt"
     }

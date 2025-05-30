@@ -2,7 +2,10 @@ from fastapi import APIRouter, HTTPException
 from app.services.email_service import enviar_peticion_dia
 from app.schemas.correo_schema import PeticionDiaRequest
 
-router = APIRouter(prefix="/correo", tags=["Correo"])
+router = APIRouter(
+    prefix="/correo",
+     tags=["Correo"]
+     )
 
 @router.post("/peticion-dia")
 async def peticion_dia(data: PeticionDiaRequest):

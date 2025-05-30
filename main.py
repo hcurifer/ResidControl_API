@@ -7,6 +7,7 @@ from app.api import turno_router
 from app.api import alarma_router
 from app.api import notificacion_router
 from app.api import feedback_router
+from app.api import correo_router
 
 app = FastAPI(title="ResidControl API")
 
@@ -27,3 +28,7 @@ app.include_router(turno_router.router)
 app.include_router(alarma_router.router)
 app.include_router(notificacion_router.router)
 app.include_router(feedback_router.router)
+app.include_router(correo_router.router)
+
+for route in app.routes:
+    print(f"🔗 {route.path}")
