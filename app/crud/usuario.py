@@ -23,9 +23,9 @@ def crear_usuario(db: Session, usuario: UsuarioCreate):
     db.refresh(db_usuario)
     return db_usuario
 
-def obtener_usuarios(db: Session, skip: int = 0, limit: int = 10):
-    return db.query(Usuario).offset(skip).limit(limit).all()
-
+def obtener_usuarios(db: Session):
+    return db.query(Usuario).all()
+    
 def obtener_usuario_por_id(db: Session, id_usuario: int):
     return db.query(Usuario).filter(Usuario.id_usuario == id_usuario).first()
 

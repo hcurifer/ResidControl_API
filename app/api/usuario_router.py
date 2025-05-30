@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from app.schemas.usuario import UsuarioCreate, UsuarioOut
 from app.db.session import SessionLocal
+from app.models.usuario import Usuario
 from app.crud.usuario import (
     crear_usuario,
     obtener_usuarios,
@@ -65,44 +66,23 @@ def obtener_por_id(id_usuario: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
     return usuario
 
-# Login por número de empresa y contraseña
+
 # Login por número de empresa y contraseña
 @router.post("/login")
 def login(datos: UsuarioLogin, db: Session = Depends(get_db)):
     numero_empresa = datos.numero_empresa
     contrasenia = datos.contrasenia
 
-    print("🔐 Intentando login...")
-    print("📨 Número recibido:", numero_empresa)
-    print("📨 Contraseña recibida:", contrasenia)
-
     usuario = obtener_usuario_por_numero_empresa(db, numero_empresa)
 
     if not usuario:
-        print("❌ Usuario no encontrado")
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
 
-    print("✅ Usuario encontrado en DB:", usuario.numero_empresa)
-    print("🔒 Hash en DB:", usuario.contrasenia_hash)
-
-    es_valida = pwd_context.verify(contrasenia, usuario.contrasenia_hash)
-    print("🔎 ¿Contraseña válida?:", es_valida)
-
-    if not es_valida:
-        print("❌ Contraseña incorrecta")
+    if not pwd_context.verify(contrasenia, usuario.contrasenia_hash):
         raise HTTPException(status_code=401, detail="Contraseña incorrecta")
-
-    print("✅ Login exitoso")
 
     return {
         "mensaje": "Login correcto",
-        "usuario": {
-            "id": usuario.id_usuario,
-            "nombre": usuario.nombre,
-            "apellidos": usuario.apellidos,
-            "email": usuario.email,
-            "rol": usuario.rol,
-            "numero_empresa": usuario.numero_empresa
-        },
+        "usuario": UsuarioOut.model_validate(usuario),  # devuelve objeto validado
         "token": "fake-jwt"
     }
