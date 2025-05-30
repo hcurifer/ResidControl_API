@@ -20,3 +20,14 @@ class AlarmaOut(BaseModel):
     model_config = {
         "from_attributes": True
     }
+class AlarmaConNombres(BaseModel):
+    id_alarma: int
+    descripcion: str
+    estado: str
+    fecha: datetime
+    enfermero: Optional[str]
+    residente: Optional[str]
+
+    model_config = {
+        "from_attributes": True
+    }

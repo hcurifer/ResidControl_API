@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from app.schemas.alarma import AlarmaCreate, AlarmaOut
+from app.schemas.alarma import AlarmaCreate, AlarmaOut, AlarmaConNombres
 from app.db.session import SessionLocal
 from app.crud.alarma import (
     crear_alarma,
@@ -9,7 +9,8 @@ from app.crud.alarma import (
     obtener_alarma_por_id,
     cambiar_estado_alarma,
     obtener_alarmas_por_estado,
-    obtener_alarmas_pendientes_por_fecha
+    obtener_alarmas_pendientes_por_fecha,
+    obtener_alarmas_con_nombres
 )
 
 router = APIRouter(
@@ -60,3 +61,8 @@ def filtrar_por_estado(estado: str, db: Session = Depends(get_db)):
 @router.get("/pendientes/fecha/{fecha}", response_model=List[AlarmaOut])
 def pendientes_por_fecha(fecha: str, db: Session = Depends(get_db)):
     return obtener_alarmas_pendientes_por_fecha(db, fecha)
+
+# Filtrar alarmas por estado y Nombres
+@router.get("/estado/{estado}/con-nombres", response_model=List[AlarmaConNombres])
+def filtrar_con_nombres(estado: str, db: Session = Depends(get_db)):
+    return obtener_alarmas_con_nombres(db, estado)
