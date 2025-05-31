@@ -2,6 +2,8 @@ from sqlalchemy.orm import Session
 from app.models.tarea import Tarea
 from app.schemas.tarea import TareaCreate
 from datetime import date
+from typing import Optional
+
 
 
 # Crear una nueva tarea
@@ -30,11 +32,21 @@ def cambiar_estado_tarea(db: Session, id_tarea: int, nuevo_estado: str):
     db.refresh(tarea)
     return tarea
 
-def obtener_tareas_por_filtro(db: Session, id_usuario: int, fecha: date, id_turno: int, estado: str):
-    return db.query(Tarea).filter(
+def obtener_tareas_por_filtro(
+    db: Session,
+    id_usuario: int,
+    fecha: date,
+    estado: str,
+    id_turno: Optional[int] = None  
+):
+    query = db.query(Tarea).filter(
         Tarea.id_usuario == id_usuario,
         Tarea.fecha == fecha,
-        Tarea.id_turno == id_turno,
         Tarea.estado == estado
-    ).all()
+    )
+
+    if id_turno is not None:
+        query = query.filter(Tarea.id_turno == id_turno)
+
+    return query.all()
 
