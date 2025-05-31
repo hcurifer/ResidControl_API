@@ -35,3 +35,11 @@ def obtener_usuario_por_email(db: Session, email: str):
 def obtener_usuario_por_numero_empresa(db: Session, numero_empresa: str):
     return db.query(Usuario).filter(Usuario.numero_empresa == numero_empresa).first()
 
+def eliminar_usuario(db: Session, id_usuario: int):
+    usuario = db.query(Usuario).filter(Usuario.id_usuario == id_usuario).first()
+    if not usuario:
+        return False
+    db.delete(usuario)
+    db.commit()
+    return True
+

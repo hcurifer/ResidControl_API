@@ -9,7 +9,8 @@ from app.crud.usuario import (
     obtener_usuarios,
     obtener_usuario_por_id,
     obtener_usuario_por_email,
-    obtener_usuario_por_numero_empresa
+    obtener_usuario_por_numero_empresa,
+    eliminar_usuario
 )
 from passlib.context import CryptContext
 from app.schemas.usuario import UsuarioLogin
@@ -86,3 +87,9 @@ def login(datos: UsuarioLogin, db: Session = Depends(get_db)):
         "usuario": UsuarioOut.model_validate(usuario),  # devuelve objeto validado
         "token": "fake-jwt"
     }
+
+@router.delete("/{id_usuario}", status_code=204)
+def eliminar(id_usuario: int, db: Session = Depends(get_db)):
+    exito = eliminar_usuario(db, id_usuario)
+    if not exito:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")

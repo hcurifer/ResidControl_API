@@ -55,6 +55,7 @@ def listar_con_nombres(db: Session = Depends(get_db)):
     ]
 
 
+
 @router.get("/con-nombres")
 def listar_con_nombres(db: Session = Depends(get_db)):
     notificaciones = db.query(Notificacion)\
