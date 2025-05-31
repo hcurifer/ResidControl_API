@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey
+from sqlalchemy.orm import relationship
 from app.db.base import Base
 
 class Notificacion(Base):
@@ -11,3 +12,8 @@ class Notificacion(Base):
     id_usuario = Column(Integer, ForeignKey("usuarios.id_usuario", ondelete="SET NULL"))
     id_residente = Column(Integer, ForeignKey("residentes.id_residente", ondelete="SET NULL"))
     id_alarma = Column(Integer, ForeignKey("alarmas.id_alarma", ondelete="SET NULL"))
+
+    # Relaciones
+    usuario = relationship("Usuario")
+    residente = relationship("Residente")
+    alarma = relationship("Alarma")
