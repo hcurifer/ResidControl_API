@@ -54,10 +54,10 @@ def cambiar_estado(id_tarea: int, nuevo_estado: str, db: Session = Depends(get_d
 # Filtrar tareas por enfermero, fecha, turno y estado
 @router.get("/filtrar", response_model=List[TareaOut])
 def filtrar_tareas(
-    id_enfermero: int,
+    id_usuario: int,
     fecha: date,
     id_turno: int,
     estado: str = Query(..., regex="^(pendiente|completada)$"),
     db: Session = Depends(get_db)
 ):
-    return obtener_tareas_por_filtro(db, id_enfermero, fecha, id_turno, estado)
+    return obtener_tareas_por_filtro(db, id_usuario, fecha, id_turno, estado)

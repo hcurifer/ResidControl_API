@@ -11,7 +11,7 @@ class Tarea(Base):
     fecha = Column(Date, nullable=False)
     duracion_minutos = Column(Integer, nullable=False, default=30)
 
-    id_enfermero = Column(Integer, ForeignKey("usuarios.id_usuario", ondelete="SET NULL"))
+    id_usuario = Column(Integer, ForeignKey("usuarios.id_usuario", ondelete="SET NULL"))
     id_turno = Column(Integer, ForeignKey("turnos.id_turno", ondelete="SET NULL"))
 
     # Relaciones opcionales para ORM (si decides usarlas más adelante)
