@@ -6,8 +6,8 @@ class NotificacionCreate(BaseModel):
     tipo: str
     contenido: str
     fecha_envio: datetime
-    id_usuario_origen: Optional[int] = None
-    id_usuario_destino: Optional[int] = None
+    id_usuario: Optional[int] = None
+    id_residente: Optional[int] = None
     id_alarma: Optional[int] = None
 
 class NotificacionOut(BaseModel):
@@ -15,8 +15,8 @@ class NotificacionOut(BaseModel):
     tipo: str
     contenido: str
     fecha_envio: datetime
-    id_usuario_origen: Optional[int]
-    id_usuario_destino: Optional[int]
+    id_usuario: Optional[int]
+    id_residente: Optional[int]
     id_alarma: Optional[int]
 
     model_config = {

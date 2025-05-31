@@ -8,6 +8,6 @@ class Notificacion(Base):
     tipo = Column(String(50), nullable=False)
     contenido = Column(Text, nullable=False)
     fecha_envio = Column(DateTime, nullable=False)
-    id_usuario_origen = Column(Integer, ForeignKey("usuarios.id_usuario", ondelete="SET NULL"))
-    id_usuario_destino = Column(Integer, ForeignKey("usuarios.id_usuario", ondelete="SET NULL"))
+    id_usuario = Column(Integer, ForeignKey("usuarios.id_usuario", ondelete="SET NULL"))
+    id_residente = Column(Integer, ForeignKey("residentes.id_residente", ondelete="SET NULL"))
     id_alarma = Column(Integer, ForeignKey("alarmas.id_alarma", ondelete="SET NULL"))
