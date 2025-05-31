@@ -30,9 +30,9 @@ def cambiar_estado_tarea(db: Session, id_tarea: int, nuevo_estado: str):
     db.refresh(tarea)
     return tarea
 
-def obtener_tareas_por_filtro(db: Session, id_enfermero: int, fecha: date, id_turno: int, estado: str):
+def obtener_tareas_por_filtro(db: Session, id_usuario: int, fecha: date, id_turno: int, estado: str):
     return db.query(Tarea).filter(
-        Tarea.id_enfermero == id_enfermero,
+        Tarea.id_usuario == id_usuario,
         Tarea.fecha == fecha,
         Tarea.id_turno == id_turno,
         Tarea.estado == estado

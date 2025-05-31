@@ -7,7 +7,7 @@ class TareaCreate(BaseModel):
     estado: Literal["pendiente", "completada"]
     fecha: date
     duracion_minutos: int
-    id_enfermero: Optional[int] = None
+    id_usuario: Optional[int] = None
     id_turno: Optional[int] = None
 
 class TareaOut(BaseModel):
@@ -16,7 +16,7 @@ class TareaOut(BaseModel):
     estado: str
     fecha: date
     duracion_minutos: int
-    id_enfermero: Optional[int]
+    id_usuario: Optional[int]
     id_turno: Optional[int]
 
     model_config = {
