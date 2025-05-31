@@ -12,3 +12,10 @@ class PeticionDiaInput(BaseModel):
     fecha: str
     nombre: str
     apellidos: str
+
+class NotificacionAlarmaCorreo(BaseModel):
+    tipo: str  
+    descripcion: str
+    mensaje: str
+    enfermero: str
+    residente: str

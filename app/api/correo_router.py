@@ -3,6 +3,10 @@ from app.services.email_service import enviar_peticion_dia
 from app.schemas.correo_schema import PeticionDiaRequest
 from app.schemas.correo_schema import PeticionDiaInput
 from app.services.email_service import enviar_correo
+from app.schemas.correo_schema import NotificacionAlarmaCorreo
+from app.services.email_service import enviar_correo_notificacion_alarma
+
+
 
 router = APIRouter(
     prefix="/correo",
@@ -27,6 +31,20 @@ async def peticion_dia(data: PeticionDiaInput):
         
     )
 
+    if not enviado:
+        raise HTTPException(status_code=500, detail="No se pudo enviar el correo")
+
+    return {"mensaje": "Correo enviado correctamente"}
+
+@router.post("/notificar-alarma")
+async def notificar_alarma(data: NotificacionAlarmaCorreo):
+    enviado = await enviar_correo_notificacion_alarma(
+        tipo=data.tipo,
+        descripcion=data.descripcion,
+        mensaje=data.mensaje,
+        enfermero=data.enfermero,
+        residente=data.residente
+    )
     if not enviado:
         raise HTTPException(status_code=500, detail="No se pudo enviar el correo")
 
