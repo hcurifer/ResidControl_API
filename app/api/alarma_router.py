@@ -1,6 +1,7 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from typing import List
+from datetime import datetime, date
 from app.schemas.alarma import AlarmaCreate, AlarmaOut, AlarmaConNombres
 from app.db.session import SessionLocal
 from app.crud.alarma import (
@@ -10,7 +11,8 @@ from app.crud.alarma import (
     cambiar_estado_alarma,
     obtener_alarmas_por_estado,
     obtener_alarmas_pendientes_por_fecha,
-    obtener_alarmas_con_nombres
+    obtener_alarmas_con_nombres,
+    obtener_alarmas_por_estado_y_fecha_con_nombres
 )
 
 router = APIRouter(
@@ -66,3 +68,27 @@ def pendientes_por_fecha(fecha: str, db: Session = Depends(get_db)):
 @router.get("/estado/{estado}/con-nombres", response_model=List[AlarmaConNombres])
 def filtrar_con_nombres(estado: str, db: Session = Depends(get_db)):
     return obtener_alarmas_con_nombres(db, estado)
+
+# Eliminar alarmas por id
+@router.delete("/{id_alarma}", status_code=204)
+def eliminar_alarma(id_alarma: int, db: Session = Depends(get_db)):
+    alarma = obtener_alarma_por_id(db, id_alarma)
+    if not alarma:
+        raise HTTPException(status_code=404, detail="Alarma no encontrada")
+
+    db.delete(alarma)
+    db.commit()
+
+# Filtar alarmas por fecha 
+@router.get("/filtrar", response_model=List[AlarmaConNombres])
+def filtrar_alarmas(
+    estado: str = Query(...),
+    fecha: str = Query(...),  # <- ahora recibimos como str
+    db: Session = Depends(get_db)
+):
+    try:
+        fecha_convertida = datetime.strptime(fecha, "%Y-%m-%d").date()
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Formato de fecha inválido. Usa YYYY-MM-DD.")
+    
+    return obtener_alarmas_por_estado_y_fecha_con_nombres(db, estado, fecha_convertida)
